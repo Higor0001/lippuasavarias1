@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-image: url("/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #2C3E50;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 1000px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(31, 58, 92, 0.15);
+  border: 1px solid rgba(31, 58, 92, 0.1);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #1F3A5C;
+  padding-bottom: 15px;
+}
+
+header h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #1F3A5C;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+}
+
+header h1 i {
+  background: linear-gradient(135deg, #1F3A5C, #2E5090);
+  color: #ffffff;
+  padding: 12px;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-top: 12px;
+  color: #1F3A5C;
+  font-size: 14px;
+}
+
+input,
+button,
+select {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 6px;
+  border: 1.5px solid #D5DCE3;
+  margin-top: 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #2C3E50;
+  background-color: #F8F9FA;
+  transition: all 0.3s ease;
+}
+
+input:focus,
+select:focus {
+  border-color: #2E5090;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(46, 80, 144, 0.1);
+  outline: none;
+}
+
+button {
+  background: linear-gradient(135deg, #1F3A5C, #2E5090);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 12px;
+  font-weight: 600;
+  border: none;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+.file-upload {
+  background: #1a2a6c;
+  color: white;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 5px;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+canvas {
+  width: 100%;
+  border: 2px dashed #1a2a6c;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.status {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  display: none;
+  transition: all 0.3s ease;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.status.success {
+  background: #d4edda;
+  color: #155724;
+  display: block;
+  opacity: 1;
+  max-height: 100px;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+.status.error {
+  background: #f8d7da;
+  color: #721c24;
+  display: block;
+  opacity: 1;
+  max-height: 100px;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+.status.processing {
+  background: #fff3cd;
+  color: #856404;
+  display: block;
+  opacity: 1;
+  max-height: 100px;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.item {
+  background: rgba(248, 249, 250, 0.95);
+  backdrop-filter: blur(5px);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.item img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+#file-name {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Estilos para o botão de envio do Telegram */
+.telegram-btn {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.telegram-btn.sending {
+  background: #6c757d !important;
+  pointer-events: none;
+}
+
+.telegram-btn.sending::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  animation: loading 2s infinite linear;
+}
+
+@keyframes loading {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+/* Estilos para botões desabilitados */
+button:disabled {
+  cursor: not-allowed !important;
+}
