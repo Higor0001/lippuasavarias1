@@ -419,7 +419,7 @@ export default function Home() {
       const data = await sendResponse.json()
 
       if (data.ok) {
-        const updated = occurrences.map((occ) => (occ.id === occurrence.id ? { ...occ, status: "sent" } : occ))
+        const updated = occurrences.map((occ) => (occ.id === occurrence.id ? { ...occ, status: "sent" as const } : occ))
         setOccurrences(updated)
         localStorage.setItem("occurrences", JSON.stringify(updated))
         alert("✅ Reenviado com sucesso!")
