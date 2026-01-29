@@ -635,11 +635,11 @@ const addItem = () => {
 
   const exportToTXT = () => {
     if (occurrences.length === 0) {
-      alert("Nenhuma ocorr??ncia para exportar")
+      alert("Nenhuma ocorrência para exportar")
       return
     }
 
-    const categoryTotals = new Map<string, Map<string, number>>()
+    const categoryTotals = new Map<string, Map<string, { label: string; quantity: number }>>()
 
     occurrences.forEach((occ) => {
       const categoryLabel = CATEGORIES.find((c) => c.id === occ.category)?.label || occ.category
@@ -649,23 +649,28 @@ const addItem = () => {
 
       const itemsMap = categoryTotals.get(categoryLabel)!
       occ.items.forEach((item) => {
-        const name = cleanProductName(item.name)
-        const current = itemsMap.get(name) || 0
-        itemsMap.set(name, current + item.quantity)
+        const displayName = cleanProductName(item.name)
+        const key = displayName.toLowerCase().replace(/\s+/g, " ").trim()
+        const current = itemsMap.get(key)
+        if (current) {
+          current.quantity += item.quantity
+        } else {
+          itemsMap.set(key, { label: displayName, quantity: item.quantity })
+        }
       })
     })
 
     const today = new Date().toISOString().split("T")[0]
     const lines: string[] = []
-    lines.push(`Relat??rio de perdas - ${today}`)
+    lines.push(`Relatório de perdas - ${today}`)
 
     Array.from(categoryTotals.entries()).forEach(([categoryLabel, itemsMap]) => {
       lines.push("")
       lines.push(`Categoria: ${categoryLabel}`)
-      Array.from(itemsMap.entries())
-        .sort((a, b) => a[0].localeCompare(b[0]))
-        .forEach(([name, quantity]) => {
-          lines.push(`- ${name}: ${quantity}`)
+      Array.from(itemsMap.values())
+        .sort((a, b) => a.label.localeCompare(b.label))
+        .forEach((item) => {
+          lines.push(`- ${item.label}: ${item.quantity}`)
         })
     })
 
@@ -1531,7 +1536,7 @@ const addItem = () => {
                 marginBottom: "10px",
               }}
             >
-              📊 Exportar Hist?rico (TXT)
+              📊 Exportar Histórico (TXT)
             </button>
 
             <button
