@@ -1,0 +1,13 @@
+{
+  "name": "Controlador de Perdas",
+  "short_name": "Perdas",
+  "description": "Aplicativo para gerenciamento de perdas em PDV, Vencimento, Armazém e Entrega",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#1F3A5C",
+  "categories": ["productivity", "business"],
+  "prefer_related_applications": false
+}
