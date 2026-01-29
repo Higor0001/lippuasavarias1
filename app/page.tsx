@@ -669,29 +669,12 @@ const addItem = () => {
         })
     })
 
-    const txtContent = lines.join("
-")
+    const txtContent = lines.join("\n")
     const blob = new Blob([txtContent], { type: "text/plain;charset=utf-8;" })
     const link = document.createElement("a")
     const url = URL.createObjectURL(blob)
     link.setAttribute("href", url)
     link.setAttribute("download", `historico_perdas_${today}.txt`)
-    link.click()
-  }
-
-    let csvContent = "Categoria,Data,Status,Itens,Observação\n"
-
-    occurrences.forEach((occ) => {
-      const categoryLabel = CATEGORIES.find((c) => c.id === occ.category)?.label || occ.category
-      const itemsText = occ.items.map((item) => `${cleanProductName(item.name)} (${item.quantity}un)`).join(" | ")
-      csvContent += `"${categoryLabel}","${occ.date}","${occ.status}","${itemsText}","${occ.observation}"\n`
-    })
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
-    const link = document.createElement("a")
-    const url = URL.createObjectURL(blob)
-    link.setAttribute("href", url)
-    link.setAttribute("download", `historico_perdas_${new Date().toISOString().split("T")[0]}.csv`)
     link.click()
   }
 
