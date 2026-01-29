@@ -633,11 +633,51 @@ const addItem = () => {
     }
   }
 
-  const exportToCSV = () => {
+  const exportToTXT = () => {
     if (occurrences.length === 0) {
-      alert("Nenhuma ocorrência para exportar")
+      alert("Nenhuma ocorr??ncia para exportar")
       return
     }
+
+    const categoryTotals = new Map<string, Map<string, number>>()
+
+    occurrences.forEach((occ) => {
+      const categoryLabel = CATEGORIES.find((c) => c.id === occ.category)?.label || occ.category
+      if (!categoryTotals.has(categoryLabel)) {
+        categoryTotals.set(categoryLabel, new Map())
+      }
+
+      const itemsMap = categoryTotals.get(categoryLabel)!
+      occ.items.forEach((item) => {
+        const name = cleanProductName(item.name)
+        const current = itemsMap.get(name) || 0
+        itemsMap.set(name, current + item.quantity)
+      })
+    })
+
+    const today = new Date().toISOString().split("T")[0]
+    const lines: string[] = []
+    lines.push(`Relat??rio de perdas - ${today}`)
+
+    Array.from(categoryTotals.entries()).forEach(([categoryLabel, itemsMap]) => {
+      lines.push("")
+      lines.push(`Categoria: ${categoryLabel}`)
+      Array.from(itemsMap.entries())
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .forEach(([name, quantity]) => {
+          lines.push(`- ${name}: ${quantity}`)
+        })
+    })
+
+    const txtContent = lines.join("
+")
+    const blob = new Blob([txtContent], { type: "text/plain;charset=utf-8;" })
+    const link = document.createElement("a")
+    const url = URL.createObjectURL(blob)
+    link.setAttribute("href", url)
+    link.setAttribute("download", `historico_perdas_${today}.txt`)
+    link.click()
+  }
 
     let csvContent = "Categoria,Data,Status,Itens,Observação\n"
 
@@ -1502,13 +1542,13 @@ const addItem = () => {
             <h3 style={{ color: "#1a2a6c", marginBottom: "15px" }}>Dados</h3>
 
             <button
-              onClick={exportToCSV}
+              onClick={exportToTXT}
               style={{
                 background: "#17a2b8",
                 marginBottom: "10px",
               }}
             >
-              📊 Exportar Histórico (CSV)
+              📊 Exportar Hist?rico (TXT)
             </button>
 
             <button
